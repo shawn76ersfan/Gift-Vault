@@ -126,7 +126,10 @@ export const chargeGift = internalAction({
       console.error('Gift charge failed', { giftId: args.giftId, error: errorMessage(error) });
       await ctx.runMutation(internal.gifts.markFailed, {
         giftId: args.giftId,
-        reason: 'Your card was declined. Please update it in Settings.',
+        reason:
+          error instanceof Stripe.errors.StripeCardError
+            ? 'Your card was declined. Please update it in Settings.'
+            : 'We could not charge your card right now. Please try sending again.',
       });
     }
     return null;

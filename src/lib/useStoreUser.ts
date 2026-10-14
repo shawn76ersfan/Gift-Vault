@@ -12,10 +12,7 @@ export function useStoreUser(): { ready: boolean; error: string | null } {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isAuthenticated || !user) {
-      setStoredFor(null);
-      return;
-    }
+    if (!isAuthenticated || !user) return;
     let canceled = false;
     store({})
       .then(() => {

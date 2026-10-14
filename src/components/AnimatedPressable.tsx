@@ -41,11 +41,11 @@ export function AnimatedPressable({
       accessibilityRole="button"
       disabled={disabled}
       onPressIn={(e) => {
-        if (!reduceMotion) scale.value = withSpring(scaleTo, springs.press);
+        if (!reduceMotion) scale.set(withSpring(scaleTo, springs.press));
         onPressIn?.(e);
       }}
       onPressOut={(e) => {
-        scale.value = withSpring(1, springs.press);
+        scale.set(withSpring(1, springs.press));
         onPressOut?.(e);
       }}
       onPress={(e) => {

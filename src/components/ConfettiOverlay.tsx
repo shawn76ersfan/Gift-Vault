@@ -55,6 +55,12 @@ function ConfettiPiece({ piece, height }: { piece: Piece; height: number }) {
   );
 }
 
+/** Deterministic 0..1 value so render stays pure while pieces still look scattered. */
+function noise(index: number, salt: number): number {
+  const x = Math.sin(index * 12.9898 + salt * 78.233) * 43758.5453;
+  return x - Math.floor(x);
+}
+
 type Props = {
   visible: boolean;
   title: string;
@@ -71,15 +77,14 @@ export function ConfettiOverlay({ visible, title, subtitle, onDone }: Props) {
   const pieces = useMemo<Piece[]>(
     () =>
       Array.from({ length: PIECES }, (_, i) => ({
-        x: Math.random() * width,
-        delay: Math.random() * 500,
+        x: noise(i, 1) * width,
+        delay: noise(i, 2) * 500,
         color: COLORS[i % COLORS.length] ?? palette.coral,
-        size: 6 + Math.random() * 6,
-        spin: 360 + Math.random() * 720,
-        drift: 10 + Math.random() * 30,
+        size: 6 + noise(i, 3) * 6,
+        spin: 360 + noise(i, 4) * 720,
+        drift: 10 + noise(i, 5) * 30,
       })),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [visible, width],
+    [width],
   );
 
   useEffect(() => {

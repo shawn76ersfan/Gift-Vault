@@ -41,7 +41,8 @@
     "react-native-svg": "15.15.4",
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.10.1",
-    "stripe": "^23.0.0"
+    "stripe": "^23.0.0",
+    "svix": "^2.8.0"
   },
   "devDependencies": {
     "@convex-dev/eslint-plugin": "^5.0.0",
